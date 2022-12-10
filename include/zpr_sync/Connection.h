@@ -24,18 +24,15 @@ namespace zpr_sync {
 
         std::string execute_command(const char *command);
 
-        static void free_channel(ssh_channel channel);
-
-        void free_session();
-
-        void error();
-
         ~Connection();
 
     private:
         ssh_session session;
 
-        int rc;
+        static void free_channel(ssh_channel channel);
 
+        void free_session();
+
+        void error();
     };
 }

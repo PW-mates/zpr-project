@@ -18,9 +18,3 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 link_libraries(ssh)
 add_executable(zpr_sync ${MAIN_SRC} src/main.cc)
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lssh")
-#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lssh")
-
-
-
-

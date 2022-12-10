@@ -4,8 +4,9 @@
 # include "zpr_sync/Connection.h"
 namespace zpr_sync {
     Connection::Connection(const void *user, const char *password, int port) {
+        int rc;
         session = ssh_new();
-        if (session == NULL) exit(-1);
+        if (session == nullptr) exit(-1);
         ssh_options_set(session, SSH_OPTIONS_HOST, "localhost");
         ssh_options_set(session, SSH_OPTIONS_PORT, &port);
         ssh_options_set(session, SSH_OPTIONS_USER, user);
@@ -17,7 +18,7 @@ namespace zpr_sync {
         printf("Password Autentication...\n");
         printf("pass"); //to change
         printf("\n");
-        rc = ssh_userauth_password(session, NULL, password);
+        rc = ssh_userauth_password(session, nullptr, password);
         if (rc != SSH_AUTH_SUCCESS) error();
     }
 
@@ -26,10 +27,11 @@ namespace zpr_sync {
         std::string response;
         char buffer[1024];
         ssh_channel channel;
+        int rc;
 
         printf("Channel...\n");
         channel = ssh_channel_new(session);
-        if (channel == NULL) exit(-1);
+        if (channel == nullptr) exit(-1);
 
         printf("Opening...\n");
         rc = ssh_channel_open_session(channel);
@@ -68,7 +70,6 @@ namespace zpr_sync {
 
     Connection::~Connection() {
         printf("close connection");
-//        free_channel();
         free_session();
     }
 }
