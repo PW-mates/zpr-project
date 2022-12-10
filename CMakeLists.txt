@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(zpr-sync)
-message("zpr-sync")
+project(zpr_sync)
+message("zpr_sync")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER "g++")
@@ -11,8 +11,12 @@ find_package(SSH REQUIRED)
 message("Looking for Boost")
 find_package(Boost 1.56 REQUIRED COMPONENTS unit_test_framework)
 
+file(GLOB MAIN_SRC src/zpr_sync/*.cc include/zpr_sync/*.h)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+
 link_libraries(ssh)
-add_executable(zpr-sync ${MAIN_SRC} src/main.cc)
+add_executable(zpr_sync ${MAIN_SRC} src/main.cc)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lssh")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lssh")
