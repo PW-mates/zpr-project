@@ -1,6 +1,17 @@
 //
 // Created by andrii on 10.12.22.
 //
+
+/**
+ * @file main.cc
+ * @author Andrii Demydenko
+ * @brief Test
+ * @version 1.0
+ * @date 2022-12-10
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include "zpr_sync/Connection.h"
 
 int main(int argc, char** argv) {
