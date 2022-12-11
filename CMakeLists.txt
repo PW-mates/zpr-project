@@ -21,6 +21,13 @@ add_executable(zpr_sync ${MAIN_SRC} src/main.cc)
 
 set (BUILD_DOCS True) #set TRUE if you want to build docs
 
+set (BUILD_TESTS True) #Set to TRUE if you want to build tests
+
+if(BUILD_TESTS)
+    find_package(Test REQUIRED)
+
+endif()
+
 if(BUILD_DOCS)
     find_package(Doxy REQUIRED)
 endif()
