@@ -34,6 +34,7 @@ jobs:
       run: make test
     - name: Check coverage
       run: |
+        mkdir coverage
         lcov -c -d ./CMakeFiles/runUnitTests.dir/test/ -o ./coverage/lcov.info
         genhtml coverage/lcov.info -o ./coverage
     - name: Coveralls
