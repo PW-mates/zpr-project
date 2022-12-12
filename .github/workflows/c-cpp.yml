@@ -34,8 +34,8 @@ jobs:
       run: make test
     - name: Check coverage
       run: |
-        lcov -c -d ./CMakeFiles/runUnitTests.dir/test/ -o coverage.info
-        genhtml coverage.info -o ./coverage
+        lcov -c -d ./CMakeFiles/runUnitTests.dir/test/ -o ./coverage/lcov.info
+        genhtml coverage/lcov.info -o ./coverage
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
