@@ -7,3 +7,4 @@ CMakecache.txt
 *.in
 Testing/Temporary
 bin/
+Debug/

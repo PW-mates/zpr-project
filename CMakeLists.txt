@@ -13,10 +13,9 @@ message("Looking for Boost")
 find_package(Boost 1.56 REQUIRED COMPONENTS unit_test_framework)
 
 set(EXECUTABLE_NAME "zpr_sync")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Debug)
 file(GLOB MAIN_SRC src/zpr_sync/*.cc include/zpr_sync/*.h)
 include_directories(${PROJECT_SOURCE_DIR}/include)
-
 
 link_libraries(ssh)
 add_executable(zpr_sync ${MAIN_SRC} src/main.cc)
