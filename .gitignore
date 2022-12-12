@@ -5,3 +5,5 @@ CMakeFiles
 CMakecache.txt
 *.cmake
 *.in
+Testing/Temporary
+bin/
