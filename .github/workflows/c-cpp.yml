@@ -14,8 +14,7 @@ jobs:
     - name: Install required library
       run: ./configure/linux.sh
     - name: make
-      run: 
-        - cmake .
+      run: cmake .
     - name: Build project
       run: make
     - name: Run tests
