@@ -7,3 +7,6 @@ CMakecache.txt
 *.in
 Testing/Temporary
 bin/
+Debug/
+coverage/
+coverage.info

@@ -7,15 +7,37 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+      fail-fast: false
     steps:
     - uses: actions/checkout@v3
-    - name: Install required library
-      run: sh ./configure/linux.sh
+    - name: Install required library Linux
+      run: |
+         if [ "$RUNNER_OS" == "Linux" ]; then
+              sh ./configure/linux.sh
+         elif [ "$RUNNER_OS" == "macOS" ]; then
+              sh ./configure/macos.sh
+         else
+              echo "$RUNNER_OS not supported"
+              exit 1
+         fi
+      shell: bash
     - name: make
       run: cmake .
     - name: Build project
       run: make
     - name: Run tests
       run: make test
+    - name: Check coverage
+      run: |
+        mkdir coverage
+        lcov -c -d ./CMakeFiles/runUnitTests.dir/test/ -o ./coverage/lcov.info
+        genhtml coverage/lcov.info -o ./coverage
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
