@@ -32,3 +32,11 @@ jobs:
       run: make
     - name: Run tests
       run: make test
+    - name: Check coverage
+      run: |
+        lcov -c -d ./CMakeFiles/runUnitTests.dir/test/ -o coverage.info
+        genhtml coverage.info -o ./coverage
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}

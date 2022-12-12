@@ -8,3 +8,5 @@ CMakecache.txt
 Testing/Temporary
 bin/
 Debug/
+coverage/
+coverage.info
