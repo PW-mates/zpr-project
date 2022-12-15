@@ -1,7 +1,3 @@
-//
-// Created by andrii on 10.12.22.
-//
-
 /**
  * @file Connection.cc
  * @author Andrii Demydenko

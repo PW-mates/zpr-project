@@ -1,6 +1,13 @@
-//
-// Created by andrii on 14.12.22.
-//
+/**
+ * @file InputArgParser.cc
+ * @author Andrii Demydenko
+ * @brief Contains the methods of the InputArgParser class
+ * @version 1.0
+ * @date 2022-12-14
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include "zpr_sync/InputArgParser.h"
 
 using namespace std;
@@ -36,11 +43,6 @@ namespace zpr_sync {
             cout << desc << endl;
             exit(0);
         }
-//        if (vm.count("input-data")) {
-//            cout << "input data are: " << endl;
-//            for(int i = 0; i < vm["input-data"].as< vector<string> >().size(); i++)
-//                cout << vm["input-data"].as< vector<string> >()[i] << endl;
-//        }
     }
 
     string InputArgParser::getHost() {
