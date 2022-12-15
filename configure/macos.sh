@@ -1,7 +1,7 @@
 #!/bin/bash
 
-sudo brew install libssh
-sudo brew install boost
-sudo brew install googletest
-sudo brew install doxygen
-sudo brew install lcov
+brew install libssh
+brew install boost
+brew install googletest
+brew install doxygen
+brew install lcov
