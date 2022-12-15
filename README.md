@@ -1,4 +1,5 @@
 # ZPR-Project
+![Build status](https://github.com/PW-mates/zpr-project/actions/workflows/c-cpp.yml/badge.svg?branch=main)
 [![Coverage Status](https://coveralls.io/repos/github/box/boxcli/badge.svg?branch=main)](https://coveralls.io/github/box/boxcli?branch=main)
 
 Tool for synchronizing the contents of directories through a server accessible via ssh.
