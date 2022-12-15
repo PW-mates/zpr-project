@@ -20,7 +20,7 @@
 namespace zpr_sync {
     class Connection {
     public:
-        Connection(const void *user, const char *password, int port);
+        Connection(const char *user, const char *host, const char *key_path, int port);
 
         std::string execute_command(const char *command);
 

@@ -1,8 +1,6 @@
 # zpr-project
 
-```
-sudo apt-get update
-sudo apt-get install libssh-dev
-sudo apt-get install libboost-all-dev
-sudo apt-get install libgtest-dev
-```
+### Connect to localhost
+ssh-keygen -t rsa -f test_key
+cat test_key.pub >> ~/.ssh/authorized_keys
+./zpr_sync --pl /. --n user@localhost --pr /Downloads/ --k pathToKey

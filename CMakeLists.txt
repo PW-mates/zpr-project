@@ -13,7 +13,7 @@ SET(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
 find_package(libssh REQUIRED)
 
 message("Looking for Boost")
-find_package(Boost 1.56 REQUIRED COMPONENTS unit_test_framework)
+find_package(Boost 1.56 REQUIRED)
 
 set(EXECUTABLE_NAME "zpr_sync")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Debug)
@@ -21,6 +21,7 @@ file(GLOB MAIN_SRC src/zpr_sync/*.cc include/zpr_sync/*.h)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 link_libraries(ssh)
+link_libraries(boost_program_options)
 add_executable(zpr_sync ${MAIN_SRC} src/main.cc)
 
 set (BUILD_DOCS True) #set TRUE if you want to build docs

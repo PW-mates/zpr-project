@@ -14,22 +14,24 @@
  */
 # include "zpr_sync/Connection.h"
 namespace zpr_sync {
-    Connection::Connection(const void *user, const char *password, int port) {
+    Connection::Connection(const char *user, const char *host, const char *key_path, int port) {
         int rc;
         session = ssh_new();
         if (session == nullptr) exit(-1);
-        ssh_options_set(session, SSH_OPTIONS_HOST, "localhost");
+        ssh_options_set(session, SSH_OPTIONS_HOST, host);
         ssh_options_set(session, SSH_OPTIONS_PORT, &port);
-        ssh_options_set(session, SSH_OPTIONS_USER, user);
 
         printf("Connecting...\n");
         rc = ssh_connect(session);
         if (rc != SSH_OK) error();
 
         printf("Password Autentication...\n");
-        printf("pass"); //to change
-        printf("\n");
-        rc = ssh_userauth_password(session, nullptr, password);
+        rc = ssh_userauth_privatekey_file(
+                session,
+                user,
+                key_path,
+                nullptr
+                );
         if (rc != SSH_AUTH_SUCCESS) error();
     }
 
@@ -55,7 +57,7 @@ namespace zpr_sync {
         printf("Received:\n");
         nbytes = ssh_channel_read(channel, buffer, sizeof(buffer), 0);
         while (nbytes > 0) {
-            response += buffer;
+            response.append(buffer, nbytes);
             nbytes = ssh_channel_read(channel, buffer, sizeof(buffer), 0);
         }
         free_channel(channel);
