@@ -4,7 +4,7 @@
 
 Tool for synchronizing the contents of directories through a server accessible via ssh.
 
-Project outcome is to create an application that perform continuous data synchronization of a specified folder between a local PC and a remote Server and implement the following requirements:
+Project outcome is to create an application that perform one-time data synchronization of a specified folder between a local PC and a remote Server and implement the following requirements:
 
 * Server access via ssh
 * Main functionality should correspond to the Unison functionality
@@ -36,7 +36,14 @@ sh ./configure/macos.sh
 ```
 ## Usage
 ### Connect to localhost
+```
 ssh-keygen -t rsa -f test_key
 cat test_key.pub >> ~/.ssh/authorized_keys
-./zpr_sync --pl /. --n user@localhost --pr /Downloads/ --k pathToKey
+./zpr_sync --pl /. --n user@localhost --pr /Downloads/ --k test_key
+```
+
+### Allowed arguments
+```
+./zpr_sync --h
+```
 
