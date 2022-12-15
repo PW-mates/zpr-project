@@ -29,21 +29,49 @@ To install all the required libraries on Linux, run the following command:
 ```
 sh ./configure/linux.sh
 ```
-### MacOS
+### MacOS (temporarily unavailable)
 To install all the required libraries on MacOS, run the following command:
 ```
 sh ./configure/macos.sh
 ```
-## Usage
-### Connect to localhost
+### Windows (temporarily unavailable)
+To install all the required libraries on Windows, run the following command:
 ```
-ssh-keygen -t rsa -f test_key
-cat test_key.pub >> ~/.ssh/authorized_keys
-./zpr_sync --pl /. --n user@localhost --pr /Downloads/ --k test_key
 ```
 
+## Usage
+*it is assumed that you are in **zpr-project** dir and follow each step in sequence*
+### 1. Create SSH key pairs (for localhost purposes)
+```
+mkdir keys
+cd keys
+ssh-keygen -t rsa -f test_key
+cat test_key.pub >> ~/.ssh/authorized_keys
+cd ..
+```
+### 2. Build
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+### 3. Connection to the localhost
+```
+./Debug/zpr_sync --pl /. --n user@localhost --pr /Downloads/ --k test_key
+```
+the output of execution should be the same as ```cd ~ && ls```
 ### Allowed arguments
 ```
-./zpr_sync --h
+./Debug/zpr_sync --h
 ```
+### Run tests
+```
+./Debug/runUnitTests
+```
+### Build documentation
+```
+doxygen doxyfile
+```
+**index.html** - /zpr-project/build/html/index.html
 
