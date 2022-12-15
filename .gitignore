@@ -11,3 +11,5 @@ Debug/
 coverage/
 coverage.info
 keys
+doxyfile
+Makefile
