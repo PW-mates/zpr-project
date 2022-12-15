@@ -12,12 +12,11 @@ Project outcome is to create an application that perform one-time data synchroni
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 ## Prerequisites
-The main application will be written by C++20 (ISO/IEC 14882) with the following libraries:
+The main application will be written by C++17 (ISO/IEC 14882) with the following libraries:
 | Tool | Version |
 | -------- | -------- |
 | CMake | 3.24.4+ |
-| inotify-tools | 3.22.6.0+ |
-| boost | 1.80.0+ |
+| boost | 1.56 |
 | filesystem | built-in library since C++17 |
 | libssh | 0.10.3+ |
 | openssl | 3.0 |
@@ -40,7 +39,7 @@ To install all the required libraries on Windows, run the following command:
 ```
 
 ## Usage
-*it is assumed that you are in **zpr-project** dir and follow each step in sequence*
+*it is assumed that you are in **source_dir** and follow each step in sequence*
 ### 1. Create SSH key pairs (for localhost purposes)
 ```
 mkdir keys
@@ -58,7 +57,7 @@ make
 ```
 ### 3. Connection to the localhost
 ```
-./Debug/zpr_sync --pl /. --n user@localhost --pr /Downloads/ --k test_key
+./Debug/zpr_sync --pl /. --n user@localhost --pr /Downloads/ --k ../keys/test_key
 ```
 the output of execution should be the same as ```cd ~ && ls```
 ### Allowed arguments
@@ -73,5 +72,5 @@ the output of execution should be the same as ```cd ~ && ls```
 ```
 doxygen doxyfile
 ```
-**index.html** - /zpr-project/build/html/index.html
+**index.html** - /source_dir/build/html/index.html
 

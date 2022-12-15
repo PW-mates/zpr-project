@@ -1,7 +1,7 @@
 /**
  * @file Connection.cc
  * @author Andrii Demydenko
- * @brief test
+ * @brief Contains the methods of the Connection class
  * @version 1.0
  * @date 2022-12-10
  *
@@ -21,7 +21,7 @@ namespace zpr_sync {
         rc = ssh_connect(session);
         if (rc != SSH_OK) error();
 
-        printf("Password Autentication...\n");
+        printf("User authentication...\n");
         rc = ssh_userauth_privatekey_file(
                 session,
                 user,
