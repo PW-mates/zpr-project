@@ -11,12 +11,14 @@ namespace zpr_sync {
     InputArgParser::InputArgParser(int &argc, char **argv) {
         po::options_description desc("Allowed options");
         desc.add_options()
-                ("help,h", "produce help message")
-                ("path_local,pl", po::value<string>(), "folder local path")
-                ("name,n", po::value<string>(), "hostname (user@1.2.3.4)")
-                ("path_remote,pr", po::value<string>(), "folder remote path")
-                ("key,k", po::value<string>(), "private key path")
-                ("port", po::value<int>()->default_value(22), "port default 22")
+                ("help", "produce help message")
+                ("host,h", po::value<string>(), "hostname (user@1.2.3.4)")
+                ("login,u", po::value<string>(), "login")
+                ("password", po::value<string>(), "password")
+                ("path-local,l", po::value<string>(), "folder local path")
+                ("path-remote,r", po::value<string>(), "folder remote path")
+                ("identify,i", po::value<string>(), "identify file")
+                ("port,p", po::value<int>()->default_value(22), "port default 22")
                 ("input-data", po::value< vector<string> >(), "unspecified data")
                 ;
 
@@ -44,40 +46,55 @@ namespace zpr_sync {
     }
 
     string InputArgParser::getHost() {
-        if (vm.count("name")) {
+        if (vm.count("host")) {
             std::vector<std::string> strs;
-            boost::split(strs, vm["name"].as<string>(), boost::is_any_of("@"));
-            return strs[1];
+            boost::split(strs, vm["host"].as<string>(), boost::is_any_of("@"));
+            if (strs.size() > 1) {
+                return strs[1];
+            }
+            return vm["host"].as<string>();
         }
        return "";
     }
 
     string InputArgParser::getUsername() {
-        if (vm.count("name")) {
+        if (vm.count("host")) {
             std::vector<std::string> strs;
-            boost::split(strs, vm["name"].as<string>(), boost::is_any_of("@"));
-            return strs[0];
+            boost::split(strs, vm["host"].as<string>(), boost::is_any_of("@"));
+            if (strs.size() > 1) {
+                return strs[0];
+            }
+        }
+        if (vm.count("login")) {
+            return vm["login"].as<string>();
         }
         return "";
     }
 
     string InputArgParser::getPathLocal() {
-        if (vm.count("path_local")) {
+        if (vm.count("path-local")) {
             return vm["path_local"].as<string>();
         }
         return "";
     }
 
     string InputArgParser::getPathRemote() {
-        if (vm.count("path_remote")) {
+        if (vm.count("path-remote")) {
             return vm["path_remote"].as<string>();
         }
         return "";
     }
 
     string InputArgParser::getKeyPath() {
-        if (vm.count("key")) {
-            return vm["key"].as<string>();
+        if (vm.count("identify")) {
+            return vm["identify"].as<string>();
+        }
+        return "";
+    }
+
+    string InputArgParser::getPassword() {
+        if (vm.count("password")) {
+            return vm["password"].as<string>();
         }
         return "";
     }
@@ -91,6 +108,7 @@ namespace zpr_sync {
         printf("path-local: %s\n", this->getPathLocal().c_str());
         printf("path-remote: %s\n", this->getPathRemote().c_str());
         printf("key: %s\n", this->getKeyPath().c_str());
+        printf("password: %s\n", this->getPassword().c_str());
         printf("port: %u\n", this->getPort());
     }
 }

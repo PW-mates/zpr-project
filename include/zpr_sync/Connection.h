@@ -20,9 +20,11 @@
 namespace zpr_sync {
     class Connection {
     public:
-        Connection(const char *user, const char *host, const char *key_path, int port);
+        Connection(const char *user, const char *host, const char *key_path, const char *password, int port);
 
         std::string execute_command(const char *command);
+
+        std::string upload_file(const char *local_file, const char *remote_file);
 
         ~Connection();
 

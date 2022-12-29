@@ -21,6 +21,7 @@ namespace zpr_sync {
         std::string getPathLocal();
         std::string getPathRemote();
         std::string getKeyPath();
+        std::string getPassword();
         int getPort();
         void showInput();
 
