@@ -1,6 +1,10 @@
+//
+// Created by andrii on 10.12.22.
+//
+
 /**
  * @file main.cc
- * @author Andrii Demydenko
+ * @author Andrii Demydenko, Minh Nguyen
  * @brief Program entry point. Contains the main function, which runs subsequent program modules.
  * @version 1.0
  * @date 2022-12-10

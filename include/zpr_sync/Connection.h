@@ -37,7 +37,7 @@ namespace zpr_sync {
          * @param key_path
          * @param port
          */
-        Connection(const char *user, const char *host, const char *key_path, int port);
+        Connection(const char *user, const char *host, const char *key_path, const char *password, int port);
         /**
          * @brief Executes provided command
          * @details Open new channel; execute provided command in a remote terminal; response from
