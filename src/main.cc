@@ -30,10 +30,10 @@ int main(int argc, char **argv)
     // const char *command = "cd ~ && ls";
     // std::string response = connection.execute_command(command);
     // printf("%s", response.c_str());
-    const char *local_file = "/Users/mcong/zpr-project/README.md";
+    const char *local_file = "/Users/mcong/zpr-project/README2.md";
     const char *remote_file = "/root/README.md";
     int rc;
-    std::string response = connection.upload_file(local_file, remote_file);
-    printf("%s", response.c_str());
+    std::string response = connection.download_file(remote_file, local_file);
+    printf("%s\n", response.c_str());
     return 0;
 }

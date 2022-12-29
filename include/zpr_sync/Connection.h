@@ -56,6 +56,15 @@ namespace zpr_sync {
          */
         std::string upload_file(const char *local_file, const char *remote_file);
         /**
+         * @brief Downloads file from the server
+         * @details Open new channel; open new sftp session; open file; download file from the server;
+         * close the channel. One channel can download only one file
+         * @param local_file
+         * @param remote_file
+         * @return Execution result
+         */
+        std::string download_file(const char * remote_path, const char * local_path);
+        /**
          * @brief Destructor: close connection
          */
         ~Connection();

@@ -45,6 +45,7 @@ namespace zpr_sync
         }
         if (rc != SSH_AUTH_SUCCESS)
             error();
+        printf("Connected!\n");
     }
 
     std::string Connection::execute_command(const char *cmd)
@@ -91,7 +92,7 @@ namespace zpr_sync
         rc = ssh_scp_init(scp);
         if (rc != SSH_OK)
             error();
-        
+
         // get file stats
         struct stat file_stat;
         stat(local_path, &file_stat);
@@ -110,6 +111,38 @@ namespace zpr_sync
         rc = ssh_scp_close(scp);
         if (rc != SSH_OK)
             error();
+        return "OK";
+    }
+
+    std::string Connection::download_file(const char *remote_path, const char *local_path)
+    {
+        ssh_scp scp;
+        int rc;
+        scp = ssh_scp_new(session, SSH_SCP_READ | SSH_SCP_RECURSIVE, remote_path);
+        if (scp == NULL)
+            error();
+        rc = ssh_scp_init(scp);
+        if (rc != SSH_OK)
+            error();
+        rc = ssh_scp_pull_request(scp);
+        if (rc != SSH_SCP_REQUEST_NEWFILE)
+            error();
+        int size = ssh_scp_request_get_size(scp);
+        char *buffer = (char *)malloc(size);
+        rc = ssh_scp_accept_request(scp);
+        if (rc != SSH_OK)
+            error();
+        rc = ssh_scp_read(scp, buffer, size);
+        if (rc == SSH_ERROR)
+        {
+            printf("Error receiving file data: %s\n",
+                    ssh_get_error(session));
+            free(buffer);
+            error();
+        }
+        FILE *file = fopen(local_path, "w");
+        fwrite(buffer, size, 1, file);
+        fclose(file);
         return "OK";
     }
 
