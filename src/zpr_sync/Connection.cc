@@ -1,11 +1,7 @@
-//
-// Created by andrii on 10.12.22.
-//
-
 /**
  * @file Connection.cc
  * @author Andrii Demydenko, Minh Nguyen
- * @brief test
+ * @brief Contains the methods of the Connection class
  * @version 1.0
  * @date 2022-12-10
  *

@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
       fail-fast: false
     steps:
     - uses: actions/checkout@v3
@@ -19,8 +19,6 @@ jobs:
       run: |
          if [ "$RUNNER_OS" == "Linux" ]; then
               sh ./configure/linux.sh
-         elif [ "$RUNNER_OS" == "macOS" ]; then
-              sh ./configure/macos.sh
          else
               echo "$RUNNER_OS not supported"
               exit 1
