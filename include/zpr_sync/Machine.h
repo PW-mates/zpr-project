@@ -12,6 +12,7 @@
 #define ZPR_SYNC_MACHINE_H
 
 #include "zpr_sync/Directory.h"
+#include <string>
 
 namespace zpr_sync {
     class Machine
