@@ -9,10 +9,23 @@
 */
 
 #include "zpr_sync/Machine.h"
+#include "zpr_sync/Logging.h"
 #include <boost/algorithm/string.hpp>
 
 namespace zpr_sync
 {
+    void Machine::check_working_dir()
+    {
+        std::string output = run_command("pwd");
+        boost::trim(output);
+        if (output.rfind("cd: no such file or directory", 0) == 0)
+        {
+            throw std::runtime_error("Working directory does not exist");
+        } else {
+            Logging::debug("Machine", ("Working directory: "+output).c_str());
+        }
+    }
+
     void Machine::detect_os()
     {
         std::string os = run_command("uname");

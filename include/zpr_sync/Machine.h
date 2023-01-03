@@ -22,6 +22,7 @@ namespace zpr_sync {
             virtual std::string run_command(const char *command) = 0;
             virtual Directory get_current_dir() = 0;
             void detect_os();
+            void check_working_dir();
             const char *working_dir;
             const char *os_name;
     };

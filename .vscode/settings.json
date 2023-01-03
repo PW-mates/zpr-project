@@ -90,7 +90,8 @@
         "utility": "cpp",
         "stop_token": "cpp",
         "cinttypes": "cpp",
-        "format": "cpp"
+        "format": "cpp",
+        "filesystem": "cpp"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/include",

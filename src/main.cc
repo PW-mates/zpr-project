@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     // int rc;
     // std::string response = connection.download_file(remote_file, local_file);
     // printf("%s\n", response.c_str());
-    zpr_sync::LocalMachine localMachine("/Users/mcong/zpr-project");
+    zpr_sync::LocalMachine localMachine("~/");
     cout << "Hello world local!" << endl;
     cout << localMachine.run_command("ls -la") << endl;
     cout << "Done!" << endl;
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
                             input.getKeyPath().c_str(),
                             input.getPassword().c_str(),
                             input.getPort());
-    zpr_sync::HostMachine hostMachine(&connection, "/root/");
+    zpr_sync::HostMachine hostMachine(&connection, "/root/repos/");
     cout << "Hello world remote!" << endl;
     cout << hostMachine.run_command("ls -la") << endl;
     cout << "Done!" << endl;

@@ -17,6 +17,7 @@ namespace zpr_sync
     {
         this->connection = conn;
         this->working_dir = working_dir;
+        this->check_working_dir();
         this->detect_os();
         Logging::info("Machine", ("Host machine OS: "+std::string(this->os_name)).c_str());
     }
@@ -34,7 +35,9 @@ namespace zpr_sync
 
     std::string HostMachine::exec(const char *cmd)
     {
-        std::string response = this->connection->execute_command(cmd);
+        std::string cd_cmd = "cd " + std::string(this->working_dir) + " && ";
+        std::string full_cmd = cd_cmd + std::string(cmd);
+        std::string response = this->connection->execute_command(full_cmd.c_str());
         return response;
     }
 }

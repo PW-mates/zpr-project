@@ -20,6 +20,7 @@ namespace zpr_sync
     LocalMachine::LocalMachine(const char *working_dir)
     {
         this->working_dir = working_dir;
+        this->check_working_dir();
         this->detect_os();
         Logging::info("Machine", ("Local machine OS: "+std::string(this->os_name)).c_str());
     }
@@ -37,9 +38,12 @@ namespace zpr_sync
 
     std::string LocalMachine::exec(const char *cmd)
     {
+        Logging::debug("LocalMachine", ("Executing command: "+std::string(cmd)).c_str());
         std::array<char, 128> buffer;
         std::string result;
-        std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+        std::string cd_cmd = "cd " + std::string(this->working_dir) + " && ";
+        std::string full_cmd = cd_cmd + std::string(cmd);
+        std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(full_cmd.c_str(), "r"), pclose);
         if (!pipe)
         {
             throw std::runtime_error("popen() failed!");
