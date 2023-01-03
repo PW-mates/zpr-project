@@ -16,6 +16,8 @@
 #include <fstream>
 #include <string>
 #include <chrono>
+#include <memory>
+
 
 namespace zpr_sync
 {
