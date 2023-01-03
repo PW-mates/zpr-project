@@ -8,7 +8,9 @@
  * @copyright Copyright (c) 2022
  *
  */
+
 #include "zpr_sync/Connection.h"
+
 namespace zpr_sync
 {
     Connection::Connection(const char *user, const char *host, const char *key_path, const char *password, int port)

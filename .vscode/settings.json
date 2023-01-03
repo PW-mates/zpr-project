@@ -68,6 +68,23 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "vector": "cpp",
-        "algorithm": "cpp"
-    }
+        "algorithm": "cpp",
+        "any": "cpp",
+        "bit": "cpp",
+        "cfenv": "cpp",
+        "codecvt": "cpp",
+        "condition_variable": "cpp",
+        "fstream": "cpp",
+        "numbers": "cpp",
+        "numeric": "cpp",
+        "queue": "cpp",
+        "random": "cpp",
+        "semaphore": "cpp",
+        "stack": "cpp",
+        "unordered_set": "cpp"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/include",
+        "/opt/homebrew/include",
+    ]
 }
