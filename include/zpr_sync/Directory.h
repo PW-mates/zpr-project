@@ -11,8 +11,6 @@
 #ifndef ZPR_SYNC_DIRECTORY_H
 #define ZPR_SYNC_DIRECTORY_H
 
-#endif //ZPR_SYNC_DIRECTORY_H
-
 #include <vector>
 #include "zpr_sync/File.h"
 
@@ -33,3 +31,5 @@ namespace zpr_sync
         std::vector<File> files;
     };
 }
+
+#endif //ZPR_SYNC_DIRECTORY_H

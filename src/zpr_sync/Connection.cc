@@ -10,6 +10,7 @@
  */
 
 #include "zpr_sync/Connection.h"
+#include "zpr_sync/Logging.h"
 
 namespace zpr_sync
 {
@@ -22,21 +23,21 @@ namespace zpr_sync
         ssh_options_set(session, SSH_OPTIONS_HOST, host);
         ssh_options_set(session, SSH_OPTIONS_PORT, &port);
 
-        printf("Connecting...\n");
+        Logging::debug("SSH", ("Connecting to "+std::string(host)+":"+std::to_string(port)).c_str());
         rc = ssh_connect(session);
         if (rc != SSH_OK)
             error();
 
         if ((password != NULL) && (password[0] != '\0'))
         {
-            printf("Password authentication...\n");
+            Logging::debug("SSH", "Password authentication");
             rc = ssh_userauth_password(session, user, password);
             if (rc != SSH_AUTH_SUCCESS)
                 error();
         }
         else
         {
-            printf("Private key authentication...\n");
+            Logging::debug("SSH", "Key authentication");
             rc = ssh_userauth_privatekey_file(
                 session,
                 user,
@@ -47,7 +48,7 @@ namespace zpr_sync
         }
         if (rc != SSH_AUTH_SUCCESS)
             error();
-        printf("Connected!\n");
+        Logging::info("SSH", "Connected to host");
     }
 
     std::string Connection::execute_command(const char *cmd)
@@ -58,22 +59,22 @@ namespace zpr_sync
         ssh_channel channel;
         int rc;
 
-        printf("Channel...\n");
+        Logging::debug("SSH", "Creating channel");
         channel = ssh_channel_new(session);
         if (channel == nullptr)
             exit(-1);
 
-        printf("Opening...\n");
+        Logging::debug("SSH", "Opening session");
         rc = ssh_channel_open_session(channel);
         if (rc != SSH_OK)
             error();
 
-        printf("Executing remote command...\n");
+        Logging::debug("SSH", ("Executing command: " + std::string(cmd)).c_str());
         rc = ssh_channel_request_exec(channel, cmd);
         if (rc != SSH_OK)
             error();
 
-        printf("Received:\n");
+        Logging::debug("SSH", "Reading response");
         nbytes = ssh_channel_read(channel, buffer, sizeof(buffer), 0);
         while (nbytes > 0)
         {
@@ -137,8 +138,7 @@ namespace zpr_sync
         rc = ssh_scp_read(scp, buffer, size);
         if (rc == SSH_ERROR)
         {
-            printf("Error receiving file data: %s\n",
-                    ssh_get_error(session));
+            Logging::error("SSH", ssh_get_error(session));
             free(buffer);
             error();
         }
@@ -163,14 +163,14 @@ namespace zpr_sync
 
     void Connection::error()
     {
-        fprintf(stderr, "Error: %s\n", ssh_get_error(session));
+        Logging::error("SSH", ssh_get_error(session));
         free_session();
         exit(-1);
     }
 
     Connection::~Connection()
     {
-        printf("close connection");
+        Logging::info("SSH", "Disconnecting from host");
         free_session();
     }
 }

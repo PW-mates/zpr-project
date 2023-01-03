@@ -9,6 +9,7 @@
  *
  */
 #include "zpr_sync/InputArgParser.h"
+#include "zpr_sync/Logging.h"
 
 using namespace std;
 using namespace boost::program_options;
@@ -27,7 +28,7 @@ namespace zpr_sync {
                 ("identify,i", po::value<string>(), "identify file")
                 ("port,p", po::value<int>()->default_value(22), "port default 22")
                 ("input-data", po::value< vector<string> >(), "unspecified data")
-                ;
+                ("verbose,v", "verbose output");
 
         // Declare which options are positional
         po::positional_options_description p;
@@ -104,13 +105,21 @@ namespace zpr_sync {
     int InputArgParser::getPort() {
         return vm["port"].as<int>();
     }
+
+    bool InputArgParser::isVerbose() {
+        return vm.count("verbose");
+    }
+
     void InputArgParser::showInput() {
-        printf("username: %s\n", this->getUsername().c_str());
-        printf("host: %s\n", this->getHost().c_str());
-        printf("path-local: %s\n", this->getPathLocal().c_str());
-        printf("path-remote: %s\n", this->getPathRemote().c_str());
-        printf("key: %s\n", this->getKeyPath().c_str());
-        printf("password: %s\n", this->getPassword().c_str());
-        printf("port: %u\n", this->getPort());
+        Logging::debug("InputArgParser::showInput", " ------------------ Input ------------------ ");
+        Logging::debug("InputArgParser", ("Username: " + this->getUsername()).c_str());
+        Logging::debug("InputArgParser", ("Host: " + this->getHost()).c_str());
+        Logging::debug("InputArgParser", ("Path local: " + this->getPathLocal()).c_str());
+        Logging::debug("InputArgParser", ("Path remote: " + this->getPathRemote()).c_str());
+        Logging::debug("InputArgParser", ("Key path: " + this->getKeyPath()).c_str());
+        Logging::debug("InputArgParser", ("Password: " + this->getPassword()).c_str());
+        Logging::debug("InputArgParser", ("Port: " + to_string(this->getPort())).c_str());
+        Logging::debug("InputArgParser", ("Verbose: " + to_string(this->isVerbose())).c_str());
+        Logging::debug("InputArgParser::showInput", " ------------------ End of args ------------------ ");
     }
 }

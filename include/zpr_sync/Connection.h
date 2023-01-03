@@ -8,10 +8,9 @@
  * @copyright Copyright (c) 2022
  *
  */
+
 #ifndef ZPR_SYNC_CONNECTION_H
 #define ZPR_SYNC_CONNECTION_H
-
-#endif //ZPR_SYNC_CONNECTION_H
 
 #include <libssh/libssh.h>
 #include <libssh/sftp.h>
@@ -91,3 +90,5 @@ namespace zpr_sync {
         void error();
     };
 }
+
+#endif //ZPR_SYNC_CONNECTION_H

@@ -11,8 +11,6 @@
 #ifndef ZPR_SYNC_FILE_H
 #define ZPR_SYNC_FILE_H
 
-#endif //ZPR_SYNC_FILE_H
-
 #include <vector>
 
 namespace zpr_sync
@@ -33,3 +31,5 @@ namespace zpr_sync
         FileType type;
     };
 }
+
+#endif //ZPR_SYNC_FILE_H

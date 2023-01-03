@@ -11,8 +11,6 @@
 #ifndef ZPR_SYNC_INPUTARGPARSER_H
 #define ZPR_SYNC_INPUTARGPARSER_H
 
-#endif //ZPR_SYNC_INPUTARGPARSER_H
-
 #include <iostream>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -70,6 +68,10 @@ namespace zpr_sync {
          * @brief Print input program arguments
          */
         void showInput();
+        /**
+         * @brief Use verbose mode
+        */
+        bool isVerbose();
 
     private:
         /**
@@ -78,3 +80,5 @@ namespace zpr_sync {
         boost::program_options::variables_map vm;
     };
 }
+
+#endif //ZPR_SYNC_INPUTARGPARSER_H
