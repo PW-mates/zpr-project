@@ -10,6 +10,7 @@
 
 #include "zpr_sync/Directory.h"
 #include "zpr_sync/Logging.h"
+#include <algorithm>
 
 namespace zpr_sync
 {
