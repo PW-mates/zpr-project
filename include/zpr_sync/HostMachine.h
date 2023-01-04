@@ -13,6 +13,7 @@
 
 #include "zpr_sync/Machine.h"
 #include "zpr_sync/Connection.h"
+#include "zpr_sync/File.h"
 
 namespace zpr_sync
 {
@@ -21,6 +22,8 @@ namespace zpr_sync
     public:
         HostMachine(Connection *conn, std::string working_dir);
         std::string run_command(std::string command);
+        std::string upload_file(File* local_path, std::string remote_path);
+        std::string download_file(File* remote_path, std::string local_path);
     private:
         std::string exec(std::string cmd);
         Connection *connection;

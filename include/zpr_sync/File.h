@@ -21,8 +21,9 @@ namespace zpr_sync
     class File
     {
     public:
-        File(std::string path, std::string flag, std::string name, std::string extension, std::string size, std::string last_modified, FileType type);
+        File(std::string path, std::string full_path, std::string flag, std::string name, std::string extension, std::string size, std::string last_modified, FileType type);
         std::string path;
+        std::string full_path;
         std::string flag;
         std::string name;
         std::string extension;

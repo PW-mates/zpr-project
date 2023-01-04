@@ -53,7 +53,7 @@ namespace zpr_sync {
          * @param remote_file
          * @return Execution result
          */
-        std::string upload_file(const char *local_file, const char *remote_file);
+        std::string upload_file(std::string local_file, std::string remote_file);
         /**
          * @brief Downloads file from the server
          * @details Open new channel; open new sftp session; open file; download file from the server;
@@ -62,7 +62,7 @@ namespace zpr_sync {
          * @param remote_file
          * @return Execution result
          */
-        std::string download_file(const char * remote_path, const char * local_path);
+        std::string download_file(std::string remote_path, std::string local_path);
         /**
          * @brief Destructor: close connection
          */

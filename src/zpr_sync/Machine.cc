@@ -28,6 +28,7 @@ namespace zpr_sync
         }
         else
         {
+            this->working_dir = output;
             Logging::debug("Machine", ("Working directory: " + output));
         }
     }
@@ -77,7 +78,6 @@ namespace zpr_sync
                         tokens.push_back(token);
                     }
                 }
-                Logging::debug("Machine", ("Token count: "+ std::to_string(tokens.size()) ));
                 if (line[0] == '.' && line[line.size() - 1] == ':')
                 {
                     std::string new_path = line.substr(0, line.size() - 1);
@@ -104,7 +104,7 @@ namespace zpr_sync
                     {
                         std::string file_path = current_path + "/" + tokens[6];
                         std::string ext = tokens[6].substr(tokens[6].find_last_of(".") + 1);
-                        File* file = new File(file_path, tokens[0], tokens[6], ext, tokens[5], tokens[4], FileType::FILE);
+                        File* file = new File(file_path, get_full_path(file_path), tokens[0], tokens[6], ext, tokens[5], tokens[4], FileType::FILE);
                         dirs[current_path]->add_file(file);
                     }
                 }
@@ -141,5 +141,22 @@ namespace zpr_sync
         default:
             throw std::runtime_error("Unsupported OS");
         }
+    }
+
+    void Machine::create_dir(std::string path)
+    {
+        std::string command = "mkdir -p " + path;
+        run_command(command.c_str());
+        return;
+    }
+
+    std::string Machine::get_full_path(std::string path)
+    {
+        std::string full_path = this->working_dir;
+        if (full_path.back() != '/')
+            full_path += path.substr(1);
+        else
+            full_path += path.substr(2);
+        return full_path;
     }
 }

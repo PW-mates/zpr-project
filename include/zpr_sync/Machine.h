@@ -27,11 +27,13 @@ namespace zpr_sync {
             virtual ~Machine() = default;
             virtual std::string run_command(std::string command) = 0;
             Directory* get_current_dir();
+            void create_dir(std::string path);
             void detect_os();
             void check_working_dir();
             std::string working_dir;
             RuntimeOS os_name;
             std::string get_os_name();
+            std::string get_full_path(std::string path);
         private:
             std::string ls_command();
     };

@@ -35,7 +35,7 @@ namespace zpr_sync
             if (rc != SSH_AUTH_SUCCESS)
                 error();
         }
-        else
+        else if ((key_path != NULL) && (key_path[0] != '\0'))
         {
             Logging::debug("SSH", "Key authentication");
             rc = ssh_userauth_privatekey_file(
@@ -45,6 +45,9 @@ namespace zpr_sync
                 nullptr);
             if (rc != SSH_AUTH_SUCCESS)
                 error();
+        } else {
+            Logging::debug("SSH", "No authentication method provided");
+            exit(-1);
         }
         if (rc != SSH_AUTH_SUCCESS)
             error();
@@ -85,11 +88,11 @@ namespace zpr_sync
         return response;
     }
 
-    std::string Connection::upload_file(const char *local_path, const char *remote_path)
+    std::string Connection::upload_file(std::string local_path, std::string remote_path)
     {
         ssh_scp scp;
         int rc;
-        scp = ssh_scp_new(session, SSH_SCP_WRITE | SSH_SCP_RECURSIVE, remote_path);
+        scp = ssh_scp_new(session, SSH_SCP_WRITE | SSH_SCP_RECURSIVE, remote_path.c_str());
         if (scp == NULL)
             error();
         rc = ssh_scp_init(scp);
@@ -98,14 +101,14 @@ namespace zpr_sync
 
         // get file stats
         struct stat file_stat;
-        stat(local_path, &file_stat);
+        stat(local_path.c_str(), &file_stat);
         char *buffer = (char *)malloc(file_stat.st_size);
-        FILE *file = fopen(local_path, "r");
+        FILE *file = fopen(local_path.c_str(), "r");
         fread(buffer, file_stat.st_size, 1, file);
         fclose(file);
 
         // send file
-        rc = ssh_scp_push_file(scp, local_path, file_stat.st_size, 0644);
+        rc = ssh_scp_push_file(scp, local_path.c_str(), file_stat.st_size, 0644);
         if (rc != SSH_OK)
             error();
         rc = ssh_scp_write(scp, buffer, file_stat.st_size);
@@ -117,11 +120,11 @@ namespace zpr_sync
         return "OK";
     }
 
-    std::string Connection::download_file(const char *remote_path, const char *local_path)
+    std::string Connection::download_file(std::string remote_path, std::string local_path)
     {
         ssh_scp scp;
         int rc;
-        scp = ssh_scp_new(session, SSH_SCP_READ | SSH_SCP_RECURSIVE, remote_path);
+        scp = ssh_scp_new(session, SSH_SCP_READ | SSH_SCP_RECURSIVE, remote_path.c_str());
         if (scp == NULL)
             error();
         rc = ssh_scp_init(scp);
@@ -142,7 +145,7 @@ namespace zpr_sync
             free(buffer);
             error();
         }
-        FILE *file = fopen(local_path, "w");
+        FILE *file = fopen(local_path.c_str(), "w");
         fwrite(buffer, size, 1, file);
         fclose(file);
         return "OK";

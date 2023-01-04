@@ -11,9 +11,10 @@
 
 namespace zpr_sync
 {
-    File::File(std::string path, std::string flag, std::string name, std::string extension, std::string size, std::string last_modified, FileType type)
+    File::File(std::string path, std::string full_path, std::string flag, std::string name, std::string extension, std::string size, std::string last_modified, FileType type)
     {
         this->path = path;
+        this->full_path = full_path;
         this->flag = flag;
         this->name = name;
         this->extension = extension;

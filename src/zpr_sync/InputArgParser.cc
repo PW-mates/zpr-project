@@ -20,11 +20,11 @@ namespace zpr_sync {
         po::options_description desc("Allowed options");
         desc.add_options()
                 ("help", "produce help message")
-                ("host,h", po::value<string>(), "hostname (user@1.2.3.4)")
-                ("login,u", po::value<string>(), "login")
+                ("host,h", po::value<string>()->required(), "hostname (user@1.2.3.4)")
+                ("login,u", po::value<string>()->required(), "login")
                 ("password", po::value<string>(), "password")
-                ("path-local,l", po::value<string>(), "folder local path")
-                ("path-remote,r", po::value<string>(), "folder remote path")
+                ("path-local,l", po::value<string>()->required(), "folder local path")
+                ("path-remote,r", po::value<string>()->required(), "folder remote path")
                 ("identify,i", po::value<string>(), "identify file")
                 ("port,p", po::value<int>()->default_value(22), "port default 22")
                 ("input-data", po::value< vector<string> >(), "unspecified data")
@@ -76,14 +76,14 @@ namespace zpr_sync {
 
     string InputArgParser::getPathLocal() {
         if (vm.count("path-local")) {
-            return vm["path_local"].as<string>();
+            return vm["path-local"].as<string>();
         }
         return "";
     }
 
     string InputArgParser::getPathRemote() {
         if (vm.count("path-remote")) {
-            return vm["path_remote"].as<string>();
+            return vm["path-remote"].as<string>();
         }
         return "";
     }

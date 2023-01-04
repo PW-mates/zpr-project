@@ -12,6 +12,8 @@
 #define ZPR_SYNC_DIRECTORY_H
 
 #include <vector>
+#include <string>
+#include <map>
 #include "zpr_sync/File.h"
 
 namespace zpr_sync
@@ -23,6 +25,10 @@ namespace zpr_sync
         void add_sub_dir(Directory *dir);
         void add_file(File *file);
         void print();
+        std::vector<std::string> get_all_sub_dir();
+        std::map<std::string, File*> get_all_files();
+        int count_files();
+        int count_dirs();
         int indent = 0;
         std::string path;
         std::string flag;
