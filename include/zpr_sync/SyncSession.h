@@ -20,6 +20,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <iterator>
 
 namespace zpr_sync
 {
