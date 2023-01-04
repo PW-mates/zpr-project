@@ -19,11 +19,10 @@ namespace zpr_sync
     class HostMachine : public Machine
     {
     public:
-        HostMachine(Connection *conn, const char *working_dir);
-        std::string run_command(const char *command);
-        Directory get_current_dir();
+        HostMachine(Connection *conn, std::string working_dir);
+        std::string run_command(std::string command);
     private:
-        std::string exec(const char *cmd);
+        std::string exec(std::string cmd);
         Connection *connection;
     };
 }

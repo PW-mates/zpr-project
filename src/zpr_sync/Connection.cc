@@ -23,7 +23,7 @@ namespace zpr_sync
         ssh_options_set(session, SSH_OPTIONS_HOST, host);
         ssh_options_set(session, SSH_OPTIONS_PORT, &port);
 
-        Logging::debug("SSH", ("Connecting to "+std::string(host)+":"+std::to_string(port)).c_str());
+        Logging::debug("SSH", ("Connecting to "+std::string(host)+":"+std::to_string(port)));
         rc = ssh_connect(session);
         if (rc != SSH_OK)
             error();
@@ -69,7 +69,7 @@ namespace zpr_sync
         if (rc != SSH_OK)
             error();
 
-        Logging::debug("SSH", ("Executing command: " + std::string(cmd)).c_str());
+        Logging::debug("SSH", ("Executing command: " + std::string(cmd)));
         rc = ssh_channel_request_exec(channel, cmd);
         if (rc != SSH_OK)
             error();

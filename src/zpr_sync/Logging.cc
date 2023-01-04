@@ -22,7 +22,7 @@ namespace zpr_sync
         return buf;
     }
 
-    void Logging::log(LogLevel level, const char *group, const char *message)
+    void Logging::log(LogLevel level, std::string group, std::string message)
     {
         if (level >= Logging::log_level)
         {
@@ -51,28 +51,28 @@ namespace zpr_sync
         Logging::log_level = level;
     }
 
-    void Logging::debug(const char *group, const char *message)
+    void Logging::debug(std::string group, std::string message)
     {
         Logging::log(LogLevel::DEBUG, group, message);
     }
 
-    void Logging::info(const char *group, const char *message)
+    void Logging::info(std::string group, std::string message)
     {
         Logging::log(LogLevel::INFO, group, message);
     }
 
-    void Logging::warning(const char *group, const char *message)
+    void Logging::warning(std::string group, std::string message)
     {
         Logging::log(LogLevel::WARNING, group, message);
     }
 
-    void Logging::error(const char *group, const char *message)
+    void Logging::error(std::string group, std::string message)
     {
         Logging::log(LogLevel::ERROR, group, message);
     }
 
     template<typename ... Args>
-    const char *Logging::string_format( const std::string& format, Args ... args )
+    std::string Logging::string_format( const std::string& format, Args ... args )
     {
         size_t size = snprintf( nullptr, 0, format.c_str(), args ... ) + 1; // Extra space for '\0'
         if( size <= 0 ){ throw std::runtime_error( "Error during formatting." ); }

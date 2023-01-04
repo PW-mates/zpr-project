@@ -18,6 +18,7 @@
 #include "zpr_sync/LocalMachine.h"
 #include "zpr_sync/HostMachine.h"
 #include "zpr_sync/Logging.h"
+#include "zpr_sync/Directory.h"
 
 using namespace std;
 
@@ -45,9 +46,11 @@ int main(int argc, char **argv)
     // int rc;
     // std::string response = connection.download_file(remote_file, local_file);
     // printf("%s\n", response.c_str());
-    zpr_sync::LocalMachine localMachine("~/");
+    zpr_sync::LocalMachine localMachine("/Users/mcong/spring-petclinic-angular");
     cout << "Hello world local!" << endl;
-    cout << localMachine.run_command("ls -la") << endl;
+    cout << localMachine.run_command("TZ=\"UTC\" ls -la -R  -D \"%Y-%m-%dT%H:%M:%S%z\"") << endl;
+    zpr_sync::Directory* dir = localMachine.get_current_dir();
+    dir->print();
     cout << "Done!" << endl;
 
     zpr_sync::Connection connection(input.getUsername().c_str(),
@@ -55,9 +58,10 @@ int main(int argc, char **argv)
                             input.getKeyPath().c_str(),
                             input.getPassword().c_str(),
                             input.getPort());
-    zpr_sync::HostMachine hostMachine(&connection, "/root/repos/");
+    zpr_sync::HostMachine hostMachine(&connection, "/root/folder/");
     cout << "Hello world remote!" << endl;
-    cout << hostMachine.run_command("ls -la") << endl;
+    zpr_sync::Directory* remote_dir = hostMachine.get_current_dir();
+    remote_dir->print();
     cout << "Done!" << endl;
     return 0;
 }

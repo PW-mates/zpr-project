@@ -17,28 +17,22 @@
 
 namespace zpr_sync
 {
-    LocalMachine::LocalMachine(const char *working_dir)
+    LocalMachine::LocalMachine(std::string working_dir)
     {
         this->working_dir = working_dir;
         this->check_working_dir();
         this->detect_os();
-        Logging::info("Machine", ("Local machine OS: "+std::string(this->os_name)).c_str());
+        Logging::info("Machine", ("Local machine OS: "+this->get_os_name()));
     }
 
-    std::string LocalMachine::run_command(const char *command)
+    std::string LocalMachine::run_command(std::string command)
     {
         return this->exec(command);
     }
 
-    Directory LocalMachine::get_current_dir()
+    std::string LocalMachine::exec(std::string cmd)
     {
-        // TODO: Implement
-        return Directory("", "", "", "", std::vector<Directory>(), std::vector<File>());
-    }
-
-    std::string LocalMachine::exec(const char *cmd)
-    {
-        Logging::debug("LocalMachine", ("Executing command: "+std::string(cmd)).c_str());
+        Logging::debug("LocalMachine", ("Executing command: "+std::string(cmd)));
         std::array<char, 128> buffer;
         std::string result;
         std::string cd_cmd = "cd " + std::string(this->working_dir) + " && ";

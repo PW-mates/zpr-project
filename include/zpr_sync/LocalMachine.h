@@ -18,11 +18,10 @@ namespace zpr_sync
     class LocalMachine : public Machine
     {
     public:
-        LocalMachine(const char *working_dir);
-        std::string run_command(const char *command);
-        Directory get_current_dir();
+        LocalMachine(std::string working_dir);
+        std::string run_command(std::string command);
     private:
-        std::string exec(const char *cmd);
+        std::string exec(std::string cmd);
     };
 }
 

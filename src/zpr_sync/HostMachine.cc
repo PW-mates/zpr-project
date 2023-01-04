@@ -13,27 +13,21 @@
 
 namespace zpr_sync
 {
-    HostMachine::HostMachine(Connection *conn, const char *working_dir)
+    HostMachine::HostMachine(Connection *conn, std::string working_dir)
     {
         this->connection = conn;
         this->working_dir = working_dir;
         this->check_working_dir();
         this->detect_os();
-        Logging::info("Machine", ("Host machine OS: "+std::string(this->os_name)).c_str());
+        Logging::info("Machine", ("Host machine OS: "+this->get_os_name()));
     }
 
-    std::string HostMachine::run_command(const char *command)
+    std::string HostMachine::run_command(std::string command)
     {
         return this->exec(command);
     }
 
-    Directory HostMachine::get_current_dir()
-    {
-        // TODO: Implement
-        return Directory("", "", "", "", std::vector<Directory>(), std::vector<File>());
-    }
-
-    std::string HostMachine::exec(const char *cmd)
+    std::string HostMachine::exec(std::string cmd)
     {
         std::string cd_cmd = "cd " + std::string(this->working_dir) + " && ";
         std::string full_cmd = cd_cmd + std::string(cmd);

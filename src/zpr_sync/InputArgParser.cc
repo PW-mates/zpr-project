@@ -112,14 +112,14 @@ namespace zpr_sync {
 
     void InputArgParser::showInput() {
         Logging::debug("InputArgParser::showInput", " ------------------ Input ------------------ ");
-        Logging::debug("InputArgParser", ("Username: " + this->getUsername()).c_str());
-        Logging::debug("InputArgParser", ("Host: " + this->getHost()).c_str());
-        Logging::debug("InputArgParser", ("Path local: " + this->getPathLocal()).c_str());
-        Logging::debug("InputArgParser", ("Path remote: " + this->getPathRemote()).c_str());
-        Logging::debug("InputArgParser", ("Key path: " + this->getKeyPath()).c_str());
-        Logging::debug("InputArgParser", ("Password: " + this->getPassword()).c_str());
-        Logging::debug("InputArgParser", ("Port: " + to_string(this->getPort())).c_str());
-        Logging::debug("InputArgParser", ("Verbose: " + to_string(this->isVerbose())).c_str());
+        Logging::debug("InputArgParser", ("Username: " + this->getUsername()));
+        Logging::debug("InputArgParser", ("Host: " + this->getHost()));
+        Logging::debug("InputArgParser", ("Path local: " + this->getPathLocal()));
+        Logging::debug("InputArgParser", ("Path remote: " + this->getPathRemote()));
+        Logging::debug("InputArgParser", ("Key path: " + this->getKeyPath()));
+        Logging::debug("InputArgParser", ("Password: " + this->getPassword()));
+        Logging::debug("InputArgParser", ("Port: " + to_string(this->getPort())));
+        Logging::debug("InputArgParser", ("Verbose: " + to_string(this->isVerbose())));
         Logging::debug("InputArgParser::showInput", " ------------------ End of args ------------------ ");
     }
 }

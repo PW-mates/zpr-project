@@ -12,22 +12,22 @@
 #define ZPR_SYNC_FILE_H
 
 #include <vector>
+#include <string>
 
 namespace zpr_sync
 {
-    enum class FileType;
+    enum class FileType {FILE, DIRECTORY, SYMLINK, UNKNOWN};
 
     class File
     {
     public:
-        File(const char *path, const char *flag, const char *name, const char *extension, const char *size, const char *last_modified, FileType type);
-    private:
-        const char *path;
-        const char *flag;
-        const char *name;
-        const char *extension;
-        const char *size;
-        const char *last_modified;
+        File(std::string path, std::string flag, std::string name, std::string extension, std::string size, std::string last_modified, FileType type);
+        std::string path;
+        std::string flag;
+        std::string name;
+        std::string extension;
+        std::string size;
+        std::string last_modified;
         FileType type;
     };
 }

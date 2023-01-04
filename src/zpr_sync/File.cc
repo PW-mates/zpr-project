@@ -11,9 +11,7 @@
 
 namespace zpr_sync
 {
-    enum class FileType {FILE, DIRECTORY, SYMLINK, UNKNOWN};
-
-    File::File(const char *path, const char *flag, const char *name, const char *extension, const char *size, const char *last_modified, FileType type)
+    File::File(std::string path, std::string flag, std::string name, std::string extension, std::string size, std::string last_modified, FileType type)
     {
         this->path = path;
         this->flag = flag;

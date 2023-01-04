@@ -15,16 +15,25 @@
 #include <string>
 
 namespace zpr_sync {
+    enum class RuntimeOS : int {
+        Linux = 0,
+        MacOS = 1,
+        Unknown = 2
+    };
+
     class Machine
     {
         public:
             virtual ~Machine() = default;
-            virtual std::string run_command(const char *command) = 0;
-            virtual Directory get_current_dir() = 0;
+            virtual std::string run_command(std::string command) = 0;
+            Directory* get_current_dir();
             void detect_os();
             void check_working_dir();
-            const char *working_dir;
-            const char *os_name;
+            std::string working_dir;
+            RuntimeOS os_name;
+            std::string get_os_name();
+        private:
+            std::string ls_command();
     };
 }
 

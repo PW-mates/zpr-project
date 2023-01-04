@@ -19,16 +19,17 @@ namespace zpr_sync
     class Directory
     {
     public:
-        Directory(const char *path, const char *flag, const char *name, const char *last_modified, const std::vector<Directory> sub_dir, const std::vector<File> files);
-        void add_sub_dir(const Directory &dir);
-        void add_file(const File &file);
-    private:
-        const char *path;
-        const char *flag;
-        const char *name;
-        const char *last_modified;
-        std::vector<Directory> sub_dir;
-        std::vector<File> files;
+        Directory(std::string path, std::string flag, std::string name, std::string last_modified, const std::vector<Directory> sub_dir, const std::vector<File> files);
+        void add_sub_dir(Directory *dir);
+        void add_file(File *file);
+        void print();
+        int indent = 0;
+        std::string path;
+        std::string flag;
+        std::string name;
+        std::string last_modified;
+        std::vector<Directory*> sub_dir;
+        std::vector<File*> files;
     };
 }
 

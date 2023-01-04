@@ -33,14 +33,14 @@ namespace zpr_sync
     {
     public:
         static void set_log_level(LogLevel level);
-        static void debug(const char *group, const char *message);
-        static void info(const char *group, const char *message);
-        static void warning(const char *group, const char *message);
-        static void error(const char *group, const char *message);
+        static void debug(std::string group, std::string message);
+        static void info(std::string group, std::string message);
+        static void warning(std::string group, std::string message);
+        static void error(std::string group, std::string message);
         template<typename ... Args>
-        static const char *string_format( const std::string& format, Args ... args );
+        static std::string string_format( const std::string& format, Args ... args );
     private:
-        static void log(LogLevel level, const char *group, const char *message);
+        static void log(LogLevel level, std::string group, std::string message);
         static std::string now();
         static inline LogLevel log_level = LogLevel::INFO;
     };
