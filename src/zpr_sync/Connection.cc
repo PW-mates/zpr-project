@@ -121,6 +121,7 @@ namespace zpr_sync
         if (rc != SSH_OK)
             error();
         ssh_scp_free(scp);
+        free(buffer);
         return "OK";
     }
 
@@ -154,6 +155,7 @@ namespace zpr_sync
         fclose(file);
         free(buffer);
         rc = ssh_scp_close(scp);
+        
         if (rc != SSH_OK)
             error();
         ssh_scp_free(scp);

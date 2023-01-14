@@ -120,42 +120,42 @@ namespace zpr_sync
         std::vector<std::string> host_dir_names;
         for (Directory *dir : local_dirs)
         {
-            local_dir_names.push_back(dir->name);
+            local_dir_names.push_back(dir->path);
         }
         for (Directory *dir : host_dirs)
         {
-            host_dir_names.push_back(dir->name);
+            host_dir_names.push_back(dir->path);
         }
         for (Directory *dir : local_dirs)
         {
-            if (std::find(host_dir_names.begin(), host_dir_names.end(), dir->name) == host_dir_names.end())
+            if (std::find(host_dir_names.begin(), host_dir_names.end(), dir->path) == host_dir_names.end())
             {
                 if (confirm_create_dir(dir, false))
                 {
-                    Logging::info("SyncSession", "Creating directory in Host " + dir->name);
+                    Logging::info("SyncSession", "Creating directory in Host " + dir->path);
                     this->host_machine->create_dir(dir->path);
                 }
                 else
                 {
                     dir->skip_sync = true;
-                    Logging::info("SyncSession", "Skipping directory " + dir->name);
+                    Logging::info("SyncSession", "Skipping directory " + dir->path);
                 }
                 up_to_date = false;
             }
         }
         for (Directory *dir : host_dirs)
         {
-            if (std::find(local_dir_names.begin(), local_dir_names.end(), dir->name) == local_dir_names.end())
+            if (std::find(local_dir_names.begin(), local_dir_names.end(), dir->path) == local_dir_names.end())
             {
                 if (confirm_create_dir(dir, true))
                 {
-                    Logging::info("SyncSession", "Creating directory in Local " + dir->name);
+                    Logging::info("SyncSession", "Creating directory in Local " + dir->path);
                     this->local_machine->create_dir(dir->path);
                 }
                 else
                 {
                     dir->skip_sync = true;
-                    Logging::info("SyncSession", "Skipping directory " + dir->name);
+                    Logging::info("SyncSession", "Skipping directory " + dir->path);
                 }
                 up_to_date = false;
             }
@@ -192,7 +192,7 @@ namespace zpr_sync
             {
                 if (confirm_update_file(kv.second, nullptr, false))
                 {
-                    Logging::info("SyncSession", "Uploading file " + kv.first + " to Host");
+                    Logging::info("SyncSession", "Uploading file " + kv.first + " ("+kv.second->size+" bytes) to Host");
                     this->host_machine->upload_file(kv.second, kv.first);
                     this->host_machine->set_modified_time(host_machine->get_full_path(kv.first), kv.second->last_modified);
                 }
@@ -223,7 +223,7 @@ namespace zpr_sync
                 {
                     if (confirm_update_file(kv.second, host_files[kv.first], false))
                     {
-                        Logging::info("SyncSession", "Uploading file " + kv.first + " to Host");
+                        Logging::info("SyncSession", "Uploading file " + kv.first + " ("+kv.second->size+" bytes) to Host");
                         this->host_machine->upload_file(kv.second, kv.first);
                         this->host_machine->set_modified_time(host_machine->get_full_path(kv.first), kv.second->last_modified);
                     }
@@ -237,7 +237,7 @@ namespace zpr_sync
                 {
                     if (confirm_update_file(host_files[kv.first], kv.second, true))
                     {
-                        Logging::info("SyncSession", "Downloading file " + kv.first + " to Local");
+                        Logging::info("SyncSession", "Downloading file " + kv.first + " ("+host_files[kv.first]->size+" bytes) to Local");
                         this->host_machine->download_file(host_files[kv.first], local_machine->get_full_path(kv.first));
                         this->local_machine->set_modified_time(local_machine->get_full_path(kv.first), host_files[kv.first]->last_modified);
                     }
@@ -266,7 +266,7 @@ namespace zpr_sync
             {
                 if (confirm_update_file(kv.second, nullptr, false))
                 {
-                    Logging::info("SyncSession", "Downloading file " + kv.first + " to Local");
+                    Logging::info("SyncSession", "Downloading file " + kv.first + " ("+kv.second->size+" bytes) to Local");
                     this->host_machine->download_file(kv.second, local_machine->get_full_path(kv.first));
                     this->local_machine->set_modified_time(local_machine->get_full_path(kv.first), kv.second->last_modified);
                 }
