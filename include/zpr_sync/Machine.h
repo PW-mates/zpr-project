@@ -34,6 +34,8 @@ namespace zpr_sync {
             RuntimeOS os_name;
             std::string get_os_name();
             std::string get_full_path(std::string path);
+            void set_modified_time(std::string path, std::string time);
+            std::string get_file_sha(std::string path);
         private:
             std::string ls_command();
     };

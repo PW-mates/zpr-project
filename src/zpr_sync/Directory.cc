@@ -80,18 +80,19 @@ namespace zpr_sync
         return count;
     }
 
-    std::vector<std::string> Directory::get_all_sub_dir()
+    std::vector<Directory*> Directory::get_all_sub_dir(bool root)
     {
-        std::vector<std::string> sub_dirs;
-        sub_dirs.push_back(this->path);
+        std::vector<Directory*> sub_dirs;
+        if (root)
+            sub_dirs.push_back(this);
         for (auto &dir : this->sub_dir)
         {
-            sub_dirs.push_back(dir->path);
-            std::vector<std::string> sub_sub_dirs = dir->get_all_sub_dir();
+            sub_dirs.push_back(dir);
+            std::vector<Directory*> sub_sub_dirs = dir->get_all_sub_dir(false);
             sub_dirs.insert(sub_dirs.end(), sub_sub_dirs.begin(), sub_sub_dirs.end());
         }
-        std::sort(sub_dirs.begin(), sub_dirs.end(), [](const std::string &a, const std::string &b) {
-            return a.size() < b.size();
+        std::sort(sub_dirs.begin(), sub_dirs.end(), [](const Directory* a, const Directory* b) {
+            return a->name.size() < b->name.size();
         });
         return sub_dirs;
     }

@@ -4,9 +4,9 @@
  * @brief Contains the methods of the File class
  * @version 1.0
  * @date 2023-01-03
- * 
+ *
  * @copyright Copyright (c) 2023
-*/
+ */
 
 #ifndef ZPR_SYNC_FILE_H
 #define ZPR_SYNC_FILE_H
@@ -16,7 +16,15 @@
 
 namespace zpr_sync
 {
-    enum class FileType {FILE, DIRECTORY, SYMLINK, UNKNOWN};
+    enum class FileType
+    {
+        FILE,
+        DIRECTORY,
+        SYMLINK,
+        UNKNOWN
+    };
+
+    class Directory;
 
     class File
     {
@@ -30,7 +38,8 @@ namespace zpr_sync
         std::string size;
         std::string last_modified;
         FileType type;
+        Directory *parent_dir;
     };
 }
 
-#endif //ZPR_SYNC_FILE_H
+#endif // ZPR_SYNC_FILE_H

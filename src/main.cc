@@ -25,24 +25,31 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    zpr_sync::Logging::set_log_level(zpr_sync::LogLevel::INFO);
-    zpr_sync::InputArgParser input(argc, argv);
-    input.showInput();
-
-    if (input.isVerbose())
+    // cout << ("2023-01-14T16:32:18+0000" > "2023-01-14T16:41:56+0000") << endl;
+    // exit(0);
+    // Print all arguments
+    for (int i = 0; i < argc; i++)
     {
-        zpr_sync::Logging::set_log_level(zpr_sync::LogLevel::DEBUG);
+        cout << argv[i] << endl;
     }
     try
     {
-        zpr_sync::LocalMachine* localMachine = new zpr_sync::LocalMachine(input.getPathLocal());
-        zpr_sync::Connection* connection = new zpr_sync::Connection(input.getUsername().c_str(),
-                                input.getHost().c_str(),
-                                input.getKeyPath().c_str(),
-                                input.getPassword().c_str(),
-                                input.getPort());
-        zpr_sync::HostMachine* hostMachine = new zpr_sync::HostMachine(connection, input.getPathRemote());
-        zpr_sync::SyncSession* syncSession = new zpr_sync::SyncSession(localMachine, hostMachine);
+        zpr_sync::Logging::set_log_level(zpr_sync::LogLevel::INFO);
+        zpr_sync::InputArgParser input(argc, argv);
+        if (input.isVerbose())
+        {
+            zpr_sync::Logging::set_log_level(zpr_sync::LogLevel::DEBUG);
+        }
+        input.showInput();
+
+        zpr_sync::LocalMachine *localMachine = new zpr_sync::LocalMachine(input.getPathLocal());
+        zpr_sync::Connection *connection = new zpr_sync::Connection(input.getUsername().c_str(),
+                                                                    input.getHost().c_str(),
+                                                                    input.getKeyPath().c_str(),
+                                                                    input.getPassword().c_str(),
+                                                                    input.getPort());
+        zpr_sync::HostMachine *hostMachine = new zpr_sync::HostMachine(connection, input.getPathRemote());
+        zpr_sync::SyncSession *syncSession = new zpr_sync::SyncSession(localMachine, hostMachine);
         syncSession->sync();
     }
     catch (const std::exception &e)

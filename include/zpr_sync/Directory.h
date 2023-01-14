@@ -25,7 +25,7 @@ namespace zpr_sync
         void add_sub_dir(Directory *dir);
         void add_file(File *file);
         void print();
-        std::vector<std::string> get_all_sub_dir();
+        std::vector<Directory*> get_all_sub_dir(bool root = true);
         std::map<std::string, File*> get_all_files();
         int count_files();
         int count_dirs();
@@ -36,6 +36,7 @@ namespace zpr_sync
         std::string last_modified;
         std::vector<Directory*> sub_dir;
         std::vector<File*> files;
+        bool skip_sync = false;
     };
 }
 

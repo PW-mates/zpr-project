@@ -21,15 +21,14 @@ namespace zpr_sync
     {
         std::string output = run_command("pwd");
         boost::trim(output);
-        if (output.find("no such file or directory") != std::string::npos)
+        if (output.find("no such file or directory") != std::string::npos || output.empty())
         {
-            Logging::error("Machine", ("Working directory does not exist, output: " + output));
-            throw std::runtime_error("Working directory does not exist");
+            throw std::runtime_error("Working directory  '" + this->working_dir + "' does not exist");
         }
         else
         {
             this->working_dir = output;
-            Logging::debug("Machine", ("Working directory: " + output));
+            Logging::info("Machine", ("Working directory: " + output));
         }
     }
 
@@ -52,7 +51,7 @@ namespace zpr_sync
         }
     }
 
-    Directory* Machine::get_current_dir()
+    Directory *Machine::get_current_dir()
     {
         std::string output = run_command(ls_command());
         std::istringstream input(output);
@@ -61,7 +60,7 @@ namespace zpr_sync
         if (input.good())
         {
             std::string current_path = ".";
-            Directory* root_dir = new Directory(current_path, "", current_path, "", std::vector<Directory>(), std::vector<File>());
+            Directory *root_dir = new Directory(current_path, "", current_path, "", std::vector<Directory>(), std::vector<File>());
             dirs[current_path] = root_dir;
             while (getline(input, line))
             {
@@ -96,7 +95,7 @@ namespace zpr_sync
                     if (tokens[0][0] == 'd')
                     {
                         std::string sub_dir = current_path + "/" + tokens[6];
-                        Directory* dir = new Directory(sub_dir, tokens[0], tokens[6], tokens[5], std::vector<Directory>(), std::vector<File>());
+                        Directory *dir = new Directory(sub_dir, tokens[0], tokens[6], tokens[5], std::vector<Directory>(), std::vector<File>());
                         dirs[current_path]->add_sub_dir(dir);
                         dirs[sub_dir] = dir;
                     }
@@ -104,7 +103,8 @@ namespace zpr_sync
                     {
                         std::string file_path = current_path + "/" + tokens[6];
                         std::string ext = tokens[6].substr(tokens[6].find_last_of(".") + 1);
-                        File* file = new File(file_path, get_full_path(file_path), tokens[0], tokens[6], ext, tokens[5], tokens[4], FileType::FILE);
+                        File *file = new File(file_path, get_full_path(file_path), tokens[0], tokens[6], ext, tokens[4], tokens[5], FileType::FILE);
+                        file->parent_dir = dirs[current_path];
                         dirs[current_path]->add_file(file);
                     }
                 }
@@ -145,7 +145,7 @@ namespace zpr_sync
 
     void Machine::create_dir(std::string path)
     {
-        std::string command = "mkdir -p " + path;
+        std::string command = "mkdir -p \"" + path + "\"";
         run_command(command.c_str());
         return;
     }
@@ -158,5 +158,20 @@ namespace zpr_sync
         else
             full_path += path.substr(2);
         return full_path;
+    }
+
+    void Machine::set_modified_time(std::string path, std::string time)
+    {
+        std::string cmd = "TZ=\"UTC\" touch -d " + time.substr(0, time.find("+")) + " \"" + path +"\"";
+        run_command(cmd.c_str());
+        Logging::debug("Machine", cmd);
+        return;
+    }
+
+    std::string Machine::get_file_sha(std::string path)
+    {
+        std::string cmd = "sha1sum \"" + path + "\"";
+        std::string output = run_command(cmd.c_str());
+        return output.substr(0, output.find(" "));
     }
 }

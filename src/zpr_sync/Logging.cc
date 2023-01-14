@@ -10,7 +10,6 @@
 
 #include "zpr_sync/Logging.h"
 
-
 namespace zpr_sync
 {
     std::string Logging::now()
@@ -27,6 +26,9 @@ namespace zpr_sync
         if (level >= Logging::log_level)
         {
             std::string level_str;
+            int bg_color = 40;
+            int fg_color = 37;
+            int style = 0;
             switch (level)
             {
             case LogLevel::DEBUG:
@@ -34,15 +36,20 @@ namespace zpr_sync
                 break;
             case LogLevel::INFO:
                 level_str = "INFO";
+                fg_color = 32;
                 break;
             case LogLevel::WARNING:
                 level_str = "WARNING";
+                fg_color = 33;
                 break;
             case LogLevel::ERROR:
                 level_str = "ERROR";
+                fg_color = 31;
+                style = 1;
                 break;
             }
-            std::cout << "[" << now() << "] " << "[" << level_str << "] " << group << ": " << message << std::endl;
+            std::cout << "\33[" << ((style != 0) ? std::to_string(style) + ";" : "") << fg_color << (bg_color != 40 ? ";" + std::to_string(bg_color) : "") << "m[" << now() << "] "
+                      << "[" << level_str << "] " << group << ": " << message << "\033[0m" << std::endl;
         }
     }
 
@@ -71,14 +78,17 @@ namespace zpr_sync
         Logging::log(LogLevel::ERROR, group, message);
     }
 
-    template<typename ... Args>
-    std::string Logging::string_format( const std::string& format, Args ... args )
+    template <typename... Args>
+    std::string Logging::string_format(const std::string &format, Args... args)
     {
-        size_t size = snprintf( nullptr, 0, format.c_str(), args ... ) + 1; // Extra space for '\0'
-        if( size <= 0 ){ throw std::runtime_error( "Error during formatting." ); }
-        std::unique_ptr<char[]> buf( new char[ size ] ); 
-        snprintf( buf.get(), size, format.c_str(), args ... );
-        std::string str = std::string( buf.get(), buf.get() + size - 1 ); // We don't want the '\0' inside
+        size_t size = snprintf(nullptr, 0, format.c_str(), args...) + 1; // Extra space for '\0'
+        if (size <= 0)
+        {
+            throw std::runtime_error("Error during formatting.");
+        }
+        std::unique_ptr<char[]> buf(new char[size]);
+        snprintf(buf.get(), size, format.c_str(), args...);
+        std::string str = std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
         return str.c_str();
     }
 }

@@ -30,10 +30,15 @@ namespace zpr_sync
         SyncSession(LocalMachine *local_machine, HostMachine *host_machine);
         void sync();
     private:
+        bool yes_to_all = false;
+        bool no_to_all = false;
+        bool confirm_create_dir(Directory *dir, bool is_local);
+        bool confirm_update_file(File *file1, File *file2, bool is_local);
         void sync_dirs(Directory *local_dir, Directory *host_dir);
         void sync_files(Directory *local_dir, Directory *host_dir);
         LocalMachine *local_machine;
         HostMachine *host_machine;
+
     };
 }
 

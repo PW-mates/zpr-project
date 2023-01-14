@@ -11,6 +11,7 @@
 
 #include "zpr_sync/Connection.h"
 #include "zpr_sync/Logging.h"
+#include <boost/algorithm/string.hpp>
 
 namespace zpr_sync
 {
@@ -23,7 +24,7 @@ namespace zpr_sync
         ssh_options_set(session, SSH_OPTIONS_HOST, host);
         ssh_options_set(session, SSH_OPTIONS_PORT, &port);
 
-        Logging::debug("SSH", ("Connecting to "+std::string(host)+":"+std::to_string(port)));
+        Logging::debug("SSH", ("Connecting to " + std::string(host) + ":" + std::to_string(port)));
         rc = ssh_connect(session);
         if (rc != SSH_OK)
             error();
@@ -45,8 +46,10 @@ namespace zpr_sync
                 nullptr);
             if (rc != SSH_AUTH_SUCCESS)
                 error();
-        } else {
-            Logging::debug("SSH", "No authentication method provided");
+        }
+        else
+        {
+            Logging::debug("SSH", "No authentication method provided, please provide either password or key path");
             exit(-1);
         }
         if (rc != SSH_AUTH_SUCCESS)
