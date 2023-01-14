@@ -133,7 +133,7 @@ namespace zpr_sync
                 if (confirm_create_dir(dir, false))
                 {
                     Logging::info("SyncSession", "Creating directory in Host " + dir->name);
-                    this->host_machine->create_dir(dir->name);
+                    this->host_machine->create_dir(dir->path);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace zpr_sync
                 if (confirm_create_dir(dir, true))
                 {
                     Logging::info("SyncSession", "Creating directory in Local " + dir->name);
-                    this->local_machine->create_dir(dir->name);
+                    this->local_machine->create_dir(dir->path);
                 }
                 else
                 {

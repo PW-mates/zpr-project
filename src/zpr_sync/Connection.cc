@@ -120,6 +120,7 @@ namespace zpr_sync
         rc = ssh_scp_close(scp);
         if (rc != SSH_OK)
             error();
+        ssh_scp_free(scp);
         return "OK";
     }
 
@@ -151,6 +152,11 @@ namespace zpr_sync
         FILE *file = fopen(local_path.c_str(), "w");
         fwrite(buffer, size, 1, file);
         fclose(file);
+        free(buffer);
+        rc = ssh_scp_close(scp);
+        if (rc != SSH_OK)
+            error();
+        ssh_scp_free(scp);
         return "OK";
     }
 
