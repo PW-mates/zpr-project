@@ -21,5 +21,9 @@ namespace zpr_sync
         this->size = size;
         this->last_modified = last_modified;
         this->type = type;
+        if (name.length() > 0 && name[0] == '.')
+        {
+            this->hidden = true;
+        }
     }
 }

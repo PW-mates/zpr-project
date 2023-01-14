@@ -39,7 +39,8 @@ namespace zpr_sync
             return false;
         std::string input;
         std::string host_name = is_local ? "local" : "host";
-        Logging::warning("SyncSession", "Directory not found on " + host_name + " machine: " + dir->path);
+        std::string hidden = dir->hidden ? "[hidden]" : "";
+        Logging::warning("SyncSession", "Directory not found on " + host_name + " machine: " + dir->path + " " + hidden);
         Logging::warning("SyncSession", "Last modified: " + dir->last_modified);
         Logging::warning("SyncSession", "Do you want to create this directory? y (yes)/Y (yes to all)/n (no)/N (no to all)");
         std::cin >> input;
@@ -73,14 +74,15 @@ namespace zpr_sync
         std::string input;
         std::string host_name_from = is_downstream ? "host" : "local";
         std::string host_name_to = is_downstream ? "local" : "host";
+        std::string hidden = file1->hidden ? "[hidden]" : "";
         if (file2 == nullptr)
         {
-            Logging::warning("SyncSession", "File not found on " + host_name_to + " machine: " + file1->path);
+            Logging::warning("SyncSession", "File not found on " + host_name_to + " machine: " + file1->path + " " + hidden);
             Logging::warning("SyncSession", "Last modified: " + file1->last_modified + ", size: " + file1->size + " bytes");
         }
         else
         {
-            Logging::warning("SyncSession", "File " + file1->path + " is different on " + host_name_from + " and " + host_name_to + " machines");
+            Logging::warning("SyncSession", "File " + file1->path + " is different on " + host_name_from + " and " + host_name_to + " machines " + hidden);
             Logging::warning("SyncSession", "Last modified: " + host_name_from + " -> " + file1->last_modified + ", " + host_name_to + " -> " + file2->last_modified);
             Logging::warning("SyncSession", "Size: " + host_name_from + " -> " + file1->size + " bytes, " + host_name_to + " -> " + file2->size + " bytes");
         }
@@ -204,7 +206,8 @@ namespace zpr_sync
             {
                 std::string file1_sha = local_machine->get_file_sha(kv.second->full_path);
                 std::string file2_sha = host_machine->get_file_sha(host_files[kv.first]->full_path);
-                if (file1_sha == file2_sha) {
+                if (file1_sha == file2_sha)
+                {
                     Logging::debug("SyncSession", "Same hash, difference last modification, file " + kv.first + " is up to date");
                     if (kv.second->last_modified > host_files[kv.first]->last_modified)
                     {

@@ -39,6 +39,7 @@ namespace zpr_sync
         std::string last_modified;
         FileType type;
         Directory *parent_dir;
+        bool hidden = false;
     };
 }
 

@@ -4,9 +4,9 @@
  * @brief Contains the methods of the Directory class
  * @version 1.0
  * @date 2023-01-03
- * 
+ *
  * @copyright Copyright (c) 2023
-*/
+ */
 
 #include "zpr_sync/Directory.h"
 #include "zpr_sync/Logging.h"
@@ -20,6 +20,10 @@ namespace zpr_sync
         this->flag = flag;
         this->name = name;
         this->last_modified = last_modified;
+        if (name.length() > 0 && name[0] == '.')
+        {
+            this->hidden = true;
+        }
     }
 
     void Directory::add_sub_dir(Directory *dir)
@@ -80,20 +84,19 @@ namespace zpr_sync
         return count;
     }
 
-    std::vector<Directory*> Directory::get_all_sub_dir(bool root)
+    std::vector<Directory *> Directory::get_all_sub_dir(bool root)
     {
-        std::vector<Directory*> sub_dirs;
+        std::vector<Directory *> sub_dirs;
         if (root)
             sub_dirs.push_back(this);
         for (auto &dir : this->sub_dir)
         {
             sub_dirs.push_back(dir);
-            std::vector<Directory*> sub_sub_dirs = dir->get_all_sub_dir(false);
+            std::vector<Directory *> sub_sub_dirs = dir->get_all_sub_dir(false);
             sub_dirs.insert(sub_dirs.end(), sub_sub_dirs.begin(), sub_sub_dirs.end());
         }
-        std::sort(sub_dirs.begin(), sub_dirs.end(), [](const Directory* a, const Directory* b) {
-            return a->name.size() < b->name.size();
-        });
+        std::sort(sub_dirs.begin(), sub_dirs.end(), [](const Directory *a, const Directory *b)
+                  { return a->path.size() < b->path.size(); });
         return sub_dirs;
     }
 

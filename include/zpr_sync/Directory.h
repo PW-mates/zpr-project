@@ -37,6 +37,7 @@ namespace zpr_sync
         std::vector<Directory*> sub_dir;
         std::vector<File*> files;
         bool skip_sync = false;
+        bool hidden = false;
     };
 }
 
