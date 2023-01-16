@@ -28,12 +28,12 @@ To install all the required libraries on Linux, run the following command:
 ```
 sh ./configure/linux.sh
 ```
-### MacOS (temporarily unavailable)
+### MacOS
 To install all the required libraries on MacOS, run the following command:
 ```
 sh ./configure/macos.sh
 ```
-### Windows (temporarily unavailable)
+### Windows (unavailable)
 To install all the required libraries on Windows, run the following command:
 ```
 ```
@@ -55,14 +55,14 @@ cd build
 cmake ..
 make
 ```
-### 3. Connection to the localhost
+### 3. Run a program
 ```
-./Debug/zpr_sync --pl /. --n user@localhost --pr /Downloads/ --k ../keys/test_key
+./Debug/zpr_sync -h localhost -u username -l ~/local/folder/ -r ~/remote/folder/ -i ../keys/test_key
 ```
-the output of execution should be the same as ```cd ~ && ls```
+
 ### Allowed arguments
 ```
-./Debug/zpr_sync --h
+./Debug/zpr_sync --help
 ```
 ### Run tests
 ```
