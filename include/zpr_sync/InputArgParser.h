@@ -1,6 +1,6 @@
 /**
  * @file InputArgParser.h
- * @author Andrii Demydenko
+ * @author Andrii Demydenko, Minh Nguyen
  * @brief Contains class declarations: InputArgParser - parses input arguments.
  * @version 1.0
  * @date 2022-12-14

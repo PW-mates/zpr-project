@@ -1,5 +1,5 @@
 //
-// Created by andrii on 11.12.22.
+// Created by Andrii Demydenko, Minh Nguyen on 11.12.22.
 //
 #include <gtest/gtest.h>
 #include "zpr_sync/File.h"

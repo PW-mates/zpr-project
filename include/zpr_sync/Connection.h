@@ -1,6 +1,6 @@
 /**
  * @file Connection.h
- * @author Andrii Demydenko
+ * @author Andrii Demydenko, Minh Nguyen
  * @brief Contains class declarations: Connection - establish connection via SSH.
  * @version 1.0
  * @date 2022-12-10

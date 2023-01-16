@@ -1,6 +1,6 @@
 /**
  * @file InputArgParser.cc
- * @author Andrii Demydenko
+ * @author Andrii Demydenko, Minh Nguyen
  * @brief Contains the methods of the InputArgParser class
  * @version 1.0
  * @date 2022-12-14

@@ -1,5 +1,5 @@
 //
-// Created by andrii on 15.01.23.
+// Created by Andrii Demydenko, Minh Nguyen on 15.01.23.
 //
 #include "zpr_sync/LocalMachine.h"
 #include <gtest/gtest.h>
