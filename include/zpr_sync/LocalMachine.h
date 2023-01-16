@@ -15,12 +15,32 @@
 
 namespace zpr_sync
 {
+    /**
+     * \class LocalMachine
+     * @brief Represents the local machine that is being synced with the remote machine.
+     * It inherits from the Machine class and implement virtual functions from it
+     *
+     */
     class LocalMachine : public Machine
     {
     public:
+        /**
+         * @brief Constructor for creating a new LocalMachine object.
+         * @param working_dir
+         */
         LocalMachine(std::string working_dir);
+        /**
+         * @brief Runs a command on the local machine.
+         * @param command
+         * @return Response
+         */
         std::string run_command(std::string command);
     private:
+        /**
+         * @brief private method that runs a command on the local machine
+         * @param cmd
+         * @return
+         */
         std::string exec(std::string cmd);
     };
 }
